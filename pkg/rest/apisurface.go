@@ -10,10 +10,10 @@ import (
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
 
-	osb "github.com/pmorie/go-open-service-broker-client/v2"
+	osb "github.com/akkeris/go-open-service-broker-client/v2"
 
-	"github.com/pmorie/osb-broker-lib/pkg/broker"
-	"github.com/pmorie/osb-broker-lib/pkg/metrics"
+	"github.com/akkeris/osb-broker-lib/pkg/broker"
+	"github.com/akkeris/osb-broker-lib/pkg/metrics"
 )
 
 // APISurface is a type that describes a OSB REST API surface. APISurface is

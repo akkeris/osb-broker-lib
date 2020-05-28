@@ -8,10 +8,10 @@ import (
 	"path"
 	"testing"
 
-	osb "github.com/pmorie/go-open-service-broker-client/v2"
-	"github.com/pmorie/osb-broker-lib/pkg/broker"
-	"github.com/pmorie/osb-broker-lib/pkg/metrics"
-	"github.com/pmorie/osb-broker-lib/pkg/rest"
+	osb "github.com/akkeris/go-open-service-broker-client/v2"
+	"github.com/akkeris/osb-broker-lib/pkg/broker"
+	"github.com/akkeris/osb-broker-lib/pkg/metrics"
+	"github.com/akkeris/osb-broker-lib/pkg/rest"
 )
 
 // TODO: is this more of an integration test?

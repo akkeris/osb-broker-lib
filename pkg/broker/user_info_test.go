@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	osb "github.com/pmorie/go-open-service-broker-client/v2"
+	osb "github.com/akkeris/go-open-service-broker-client/v2"
 )
 
 func TestParseIdentity(t *testing.T) {

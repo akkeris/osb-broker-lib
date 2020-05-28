@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	osb "github.com/pmorie/go-open-service-broker-client/v2"
+	osb "github.com/akkeris/go-open-service-broker-client/v2"
 )
 
 func getBrokerAPIVersionFromRequest(r *http.Request) string {
