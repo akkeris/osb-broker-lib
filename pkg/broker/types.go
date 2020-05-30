@@ -17,6 +17,11 @@ type ProvisionResponse struct {
 	Exists bool `json:"-"`
 }
 
+// ProvisionResponse is sent as the response to a provision call.
+type GetInstanceResponse struct {
+	osb.GetInstanceResponse
+}
+
 // UpdateInstanceResponse is sent as the response to a update call.
 type UpdateInstanceResponse struct {
 	osb.UpdateInstanceResponse

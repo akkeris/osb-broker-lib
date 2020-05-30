@@ -54,6 +54,24 @@ type Interface interface {
 	//
 	// https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#provisioning
 	Provision(request *osb.ProvisionRequest, c *RequestContext) (*ProvisionResponse, error)
+	// GetInstance encapsulates the business for a fetch operation and returns a
+	// osb.GetInstanceResponse or an error.
+	//
+	// The parameters are:
+	// - a osb.GetInstanceRequest created from the original http request
+	// - a RequestContext object which encapsulates:
+	//    - a response writer, in case find-grained control over the response is required
+	//    - the original http request, in case access is required (to get special request headers,
+	//      for example)
+	//
+	// Implementers should return a GetInstanceResponse for a successful operation or
+	// an error. The APISurface handles translating FetchResponses or errors
+	// into the correct form in the http response.
+	//
+	// For more information, see:
+	//
+	// https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/spec.md#fetching-a-service-instance
+	GetInstance(request *osb.GetInstanceRequest, c *RequestContext) (*GetInstanceResponse, error)
 	// Deprovision encapsulates the business logic for a deprovision operation
 	// and returns a osb.DeprovisionResponse or an error. Deprovisioning deletes
 	// an instance of a service and releases the resources associated with it.

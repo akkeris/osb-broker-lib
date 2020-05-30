@@ -149,6 +149,52 @@ func unpackProvisionRequest(r *http.Request) (*osb.ProvisionRequest, error) {
 	return osbRequest, nil
 }
 
+// GetInstanceHandler is the mux handler that dispatches GetInstanceRequests to the
+// broker's Interface.
+func (s *APISurface) GetInstanceHandler(w http.ResponseWriter, r *http.Request) {
+	s.Metrics.Actions.WithLabelValues("fetch").Inc()
+
+	version := getBrokerAPIVersionFromRequest(r)
+	if err := s.Broker.ValidateBrokerAPIVersion(version); err != nil {
+		s.writeError(w, err, http.StatusPreconditionFailed)
+		return
+	}
+
+	request, err := unpackGetInstanceRequest(r)
+	if err != nil {
+		s.writeError(w, err, http.StatusBadRequest)
+		return
+	}
+
+	glog.V(4).Infof("Received GetInstanceRequest for instanceID %q", request.InstanceID)
+
+	c := &broker.RequestContext{
+		Writer:  w,
+		Request: r,
+	}
+
+	response, err := s.Broker.GetInstance(request, c)
+	if err != nil {
+		s.writeError(w, err, http.StatusInternalServerError)
+		return
+	}
+
+	status := http.StatusOK
+
+	s.writeResponse(w, status, response)
+}
+
+// unpackGetInstanceRequest unpacks an osb request from the given HTTP request.
+func unpackGetInstanceRequest(r *http.Request) (*osb.GetInstanceRequest, error) {
+	osbRequest := &osb.GetInstanceRequest{}
+
+	vars := mux.Vars(r)
+
+	osbRequest.InstanceID = vars[osb.VarKeyInstanceID]
+
+	return osbRequest, nil
+}
+
 // DeprovisionHandler is the mux handler that dispatches deprovision requests to
 // the broker's Interface.
 func (s *APISurface) DeprovisionHandler(w http.ResponseWriter, r *http.Request) {

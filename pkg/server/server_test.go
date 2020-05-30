@@ -20,7 +20,8 @@ import (
 type FakeBroker struct {
 	validateAPIVersion   func(string) error
 	getCatalog           func(c *broker.RequestContext) (*broker.CatalogResponse, error)
-	provision            func(pr *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error)
+	provision            func(request *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error)
+	getInstance          func(request *osb.GetInstanceRequest, c *broker.RequestContext) (*broker.GetInstanceResponse, error)
 	deprovision          func(request *osb.DeprovisionRequest, c *broker.RequestContext) (*broker.DeprovisionResponse, error)
 	lastOperation        func(request *osb.LastOperationRequest, c *broker.RequestContext) (*broker.LastOperationResponse, error)
 	bind                 func(request *osb.BindRequest, c *broker.RequestContext) (*broker.BindResponse, error)
@@ -36,8 +37,12 @@ func (b *FakeBroker) GetCatalog(c *broker.RequestContext) (*broker.CatalogRespon
 	return b.getCatalog(c)
 }
 
-func (b *FakeBroker) Provision(pr *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error) {
-	return b.provision(pr, c)
+func (b *FakeBroker) Provision(request *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error) {
+	return b.provision(request, c)
+}
+
+func (b *FakeBroker) GetInstance(request *osb.GetInstanceRequest, c *broker.RequestContext) (*broker.GetInstanceResponse, error) {
+	return b.getInstance(request, c)
 }
 
 func (b *FakeBroker) Deprovision(request *osb.DeprovisionRequest, c *broker.RequestContext) (*broker.DeprovisionResponse, error) {
@@ -292,6 +297,7 @@ type fakeBroker struct {
 	validateBrokerAPIVersion func(version string) error
 	getCatalog               func(c *broker.RequestContext) (*broker.CatalogResponse, error)
 	provision                func(request *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error)
+	getInstance              func(request *osb.GetInstanceRequest, c *broker.RequestContext) (*broker.GetInstanceResponse, error)
 	deprovision              func(request *osb.DeprovisionRequest, c *broker.RequestContext) (*broker.DeprovisionResponse, error)
 	lastOperation            func(request *osb.LastOperationRequest, c *broker.RequestContext) (*broker.LastOperationResponse, error)
 	bind                     func(request *osb.BindRequest, c *broker.RequestContext) (*broker.BindResponse, error)
@@ -311,6 +317,9 @@ func (b *fakeBroker) GetCatalog(c *broker.RequestContext) (*broker.CatalogRespon
 }
 func (b *fakeBroker) Provision(request *osb.ProvisionRequest, c *broker.RequestContext) (*broker.ProvisionResponse, error) {
 	return b.provision(request, c)
+}
+func (b *fakeBroker) GetInstance(request *osb.GetInstanceRequest, c *broker.RequestContext) (*broker.GetInstanceResponse, error) {
+	return b.getInstance(request, c)
 }
 func (b *fakeBroker) Deprovision(request *osb.DeprovisionRequest, c *broker.RequestContext) (*broker.DeprovisionResponse, error) {
 	return b.deprovision(request, c)
