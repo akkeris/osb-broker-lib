@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/golang/glog"
 	"github.com/gorilla/mux"
+	"k8s.io/klog"
 
 	osb "github.com/akkeris/go-open-service-broker-client/v2"
 
@@ -86,7 +86,7 @@ func (s *APISurface) ProvisionHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.V(4).Infof("Received ProvisionRequest for instanceID %q", request.InstanceID)
+	klog.V(4).Infof("Received ProvisionRequest for instanceID %q", request.InstanceID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -141,7 +141,7 @@ func unpackProvisionRequest(r *http.Request) (*osb.ProvisionRequest, error) {
 	// This could be not found because platforms may support the feature
 	// but are not guaranteed to.
 	if err != nil {
-		glog.Infof("Unable to retrieve originating identity - %v", err)
+		klog.Infof("Unable to retrieve originating identity - %v", err)
 	}
 
 	osbRequest.OriginatingIdentity = identity
@@ -166,7 +166,7 @@ func (s *APISurface) GetInstanceHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	glog.V(4).Infof("Received GetInstanceRequest for instanceID %q", request.InstanceID)
+	klog.V(4).Infof("Received GetInstanceRequest for instanceID %q", request.InstanceID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -212,7 +212,7 @@ func (s *APISurface) DeprovisionHandler(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	glog.V(4).Infof("Received DeprovisionRequest for instanceID %q", request.InstanceID)
+	klog.V(4).Infof("Received DeprovisionRequest for instanceID %q", request.InstanceID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -250,7 +250,7 @@ func unpackDeprovisionRequest(r *http.Request) (*osb.DeprovisionRequest, error) 
 	// This could be not found because platforms may support the feature
 	// but are not guaranteed to.
 	if err != nil {
-		glog.Infof("Unable to retrieve originating identity - %v", err)
+		klog.Infof("Unable to retrieve originating identity - %v", err)
 	}
 	osbRequest.OriginatingIdentity = identity
 
@@ -276,7 +276,7 @@ func (s *APISurface) LastOperationHandler(w http.ResponseWriter, r *http.Request
 		return
 	}
 
-	glog.V(4).Infof("Received LastOperationRequest for instanceID %q", request.InstanceID)
+	klog.V(4).Infof("Received LastOperationRequest for instanceID %q", request.InstanceID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -333,7 +333,7 @@ func (s *APISurface) BindHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.V(4).Infof("Received BindRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
+	klog.V(4).Infof("Received BindRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -378,7 +378,7 @@ func unpackBindRequest(r *http.Request) (*osb.BindRequest, error) {
 	// This could be not found because platforms may support the feature
 	// but are not guaranteed to.
 	if err != nil {
-		glog.Infof("Unable to retrieve originating identity - %v", err)
+		klog.Infof("Unable to retrieve originating identity - %v", err)
 	}
 
 	osbRequest.OriginatingIdentity = identity
@@ -404,7 +404,7 @@ func (s *APISurface) GetBindingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.Infof("Received GetBinding request for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
+	klog.Infof("Received GetBinding request for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -449,7 +449,7 @@ func (s *APISurface) BindingLastOperationHandler(w http.ResponseWriter, r *http.
 		return
 	}
 
-	glog.Infof("Received BindingLastOperationRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
+	klog.Infof("Received BindingLastOperationRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -517,7 +517,7 @@ func (s *APISurface) UnbindHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.V(4).Infof("Received UnbindRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
+	klog.V(4).Infof("Received UnbindRequest for instanceID %q, bindingID %q", request.InstanceID, request.BindingID)
 	c := &broker.RequestContext{
 		Writer:  w,
 		Request: r,
@@ -548,7 +548,7 @@ func unpackUnbindRequest(r *http.Request, vars map[string]string) (*osb.UnbindRe
 	// This could be not found because platforms may support the feature
 	// but are not guaranteed to.
 	if err != nil {
-		glog.Infof("Unable to retrieve originating identity - %v", err)
+		klog.Infof("Unable to retrieve originating identity - %v", err)
 	}
 	osbRequest.OriginatingIdentity = identity
 
@@ -573,7 +573,7 @@ func (s *APISurface) UpdateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	glog.V(4).Infof("Received Update Request for instanceID %q", request.InstanceID)
+	klog.V(4).Infof("Received Update Request for instanceID %q", request.InstanceID)
 
 	c := &broker.RequestContext{
 		Writer:  w,
@@ -610,7 +610,7 @@ func unpackUpdateRequest(r *http.Request, vars map[string]string) (*osb.UpdateIn
 	// This could be not found because platforms may support the feature
 	// but are not guaranteed to.
 	if err != nil {
-		glog.Infof("Unable to retrieve originating identity - %v", err)
+		klog.Infof("Unable to retrieve originating identity - %v", err)
 	}
 	osbRequest.OriginatingIdentity = identity
 
@@ -625,13 +625,13 @@ func retrieveOriginatingIdentity(r *http.Request) (*osb.OriginatingIdentity, err
 	if identityHeader != "" {
 		identitySlice := strings.Split(identityHeader, " ")
 		if len(identitySlice) != 2 {
-			glog.Infof("invalid header for originating origin - %v", identityHeader)
+			klog.Infof("invalid header for originating origin - %v", identityHeader)
 			return nil, fmt.Errorf("invalid originating identity header")
 		}
 		// Base64 decode the value string so the value is passed as valid JSON.
 		val, err := base64.StdEncoding.DecodeString(identitySlice[1])
 		if err != nil {
-			glog.Infof("invalid header for originating origin - %v", identityHeader)
+			klog.Infof("invalid header for originating origin - %v", identityHeader)
 			return nil, fmt.Errorf("invalid encoding for value of originating identity header")
 		}
 		return &osb.OriginatingIdentity{

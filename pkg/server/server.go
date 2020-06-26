@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/golang/glog"
 	"github.com/gorilla/mux"
 	prom "github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"k8s.io/klog"
 
 	"github.com/akkeris/osb-broker-lib/pkg/rest"
 )
@@ -110,7 +110,7 @@ func (s *Server) RunTLSWithTLSFiles(ctx context.Context, addr string, certFilePa
 }
 
 func (s *Server) run(ctx context.Context, addr string, listenAndServe func(srv *http.Server) error) error {
-	glog.Infof("Starting server on %s\n", addr)
+	klog.Infof("Starting server on %s\n", addr)
 	srv := &http.Server{
 		Addr:    addr,
 		Handler: s.Router,
